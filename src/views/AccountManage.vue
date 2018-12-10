@@ -36,11 +36,8 @@
         </template>
       </el-table-column>
     </el-table>
-    <div class="block tc" v-show="false">
-      <pagination
-        :config="paginationConfig"
-        @currentChange="handleCurrentChange"
-        @showError="showErrorMsg"></pagination>
+    <div class="block tc">
+      <pagination v-if="paginationShow" :config="paginationConfig"></pagination>
     </div>
     <el-dialog title="新建账号" :visible.sync="dialogFormVisible">
       <el-form :model="createForm">
@@ -79,6 +76,7 @@ export default {
         limit: 10,
         currentPage: 1
       },
+      paginationShow: false,
       currentPage: 1,
       form: {
         account: ''
@@ -157,9 +155,9 @@ export default {
   },
   created () {
     setTimeout(() => {
-      console.log('111')
       this.paginationConfig.maxentries = 20
-    }, 3000)
+      this.paginationShow = true
+    }, 1000)
   }
 }
 </script>

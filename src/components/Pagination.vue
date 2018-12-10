@@ -33,7 +33,41 @@ export default {
       page_list: []
     }
   },
-  props: ['config'],
+  props: ['config', 'show'],
+  computed: {
+    maxentries () {
+      return this.config.maxentries
+    }
+  },
+  watch: {
+    // maxentries (newVal, oldVal) {
+    //   if (newVal || newVal === 0) {
+    //     if (this.config.totalPage === 0) {
+    //       return false
+    //     }
+
+    //     // 在删除完最后一页所有数据后自动跳至上一页并更新页码
+    //     if (this.config.currentPage > this.config.totalPage) {
+    //       this.turnPageTo(this.config.totalPage)
+    //     }
+
+    //     if (this.config.currentPage < 1) {
+    //       this.turnPageTo(1)
+    //     }
+    //   }
+    // },
+    config: {
+      handler (newVal, oldVal) {
+        console.log(newVal)
+        if (newVal && newVal.maxentries !== 0) {
+          console.log(newVal.maxentries)
+          this.numPages()
+        }
+      },
+      immediate: true,
+      deep: true
+    }
+  },
   created () {
     console.log(this.config)
     for (var k in this.defaultConfig) {
@@ -79,37 +113,6 @@ export default {
       }
 
       this.config.jumpPage = ''
-    }
-  },
-  computed: {
-    maxentries () {
-      return this.config.maxentries
-    }
-  },
-  watch: {
-    maxentries (newVal, oldVal) {
-      if (newVal || newVal === 0) {
-        if (this.config.totalPage === 0) {
-          return false
-        }
-
-        // 在删除完最后一页所有数据后自动跳至上一页并更新页码
-        if (this.config.currentPage > this.config.totalPage) {
-          this.turnPageTo(this.config.totalPage)
-        }
-
-        if (this.config.currentPage < 1) {
-          this.turnPageTo(1)
-        }
-      }
-    },
-    config: {
-      handler (newVal, oldVal) {
-        console.log(this.config.maxentries)
-        this.numPages()
-      },
-      // immediate: true,
-      deep: true
     }
   }
 }
