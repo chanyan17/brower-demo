@@ -11,9 +11,11 @@
           </el-form-item>
         </el-form>
       </div></el-col>
-      <el-col :span="6"><div class="grid-content">
-        <el-button type="primary" @click="createAccount">新建账号</el-button>
-      </div></el-col>
+      <el-col :span="6">
+        <div class="grid-content tr">
+          <el-button type="primary" @click="createAccount">新建账号</el-button>
+        </div>
+      </el-col>
     </el-row>
      <el-table
       :data="tableData"
@@ -21,51 +23,94 @@
       style="width: 100%">
       <el-table-column
         fixed
-        prop="date"
-        label="日期">
+        prop="account"
+        label="账号">
       </el-table-column>
       <el-table-column
         fixed="right"
         label="操作"
         width="120">
         <template slot-scope="scope">
-          <el-button @click="handleClick(scope.row)" type="text" size="small">编辑</el-button>
-          <el-button type="text" size="small">删除</el-button>
+          <el-button @click="handleModify(scope.row)" type="text" size="small">编辑</el-button>
+          <el-button type="text" size="small" @click="handleDelete(deleteAccount, scope.row.account)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
+    <div class="block tc" v-show="false">
+      <pagination
+        :config="paginationConfig"
+        @currentChange="handleCurrentChange"
+        @showError="showErrorMsg"></pagination>
+    </div>
+    <el-dialog title="新建账号" :visible.sync="dialogFormVisible">
+      <el-form :model="createForm">
+        <el-form-item label="姓名" :label-width="formLabelWidth">
+          <el-input v-model="createForm.name" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="手机号" :label-width="formLabelWidth">
+          <el-input v-model="createForm.mobile" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="角色" :label-width="formLabelWidth">
+          <el-checkbox-group v-model="createForm.checkedCities" @change="handleCheckedCitiesChange">
+            <el-checkbox v-for="city in cities" :label="city" :key="city">{{city}}</el-checkbox>
+          </el-checkbox-group>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="dialogFormVisible = false">新 建</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 <script>
+import Pagination from '@/components/Pagination'
 export default {
+  components: {
+    Pagination
+  },
   data () {
     return {
+      cities: ['上海', '北京', '广州', '深圳'],
+      checkedCities: [],
+      formLabelWidth: '120px',
+      dialogFormVisible: false,
+      paginationConfig: {
+        limit: 10,
+        currentPage: 1
+      },
+      currentPage: 1,
       form: {
         account: ''
       },
+      createForm: {
+        name: '',
+        mobile: '',
+        checkedCities: []
+      },
       tableData: [{
-        date: '2016-05-03',
+        account: '13560123456',
         name: '王小虎',
         province: '上海',
         city: '普陀区',
         address: '上海市普陀区金沙江路 1518 弄',
         zip: 200333
       }, {
-        date: '2016-05-02',
+        account: '13560123457',
         name: '王小虎',
         province: '上海',
         city: '普陀区',
         address: '上海市普陀区金沙江路 1518 弄',
         zip: 200333
       }, {
-        date: '2016-05-04',
+        account: '13560123458',
         name: '王小虎',
         province: '上海',
         city: '普陀区',
         address: '上海市普陀区金沙江路 1518 弄',
         zip: 200333
       }, {
-        date: '2016-05-01',
+        account: '13560123459',
         name: '王小虎',
         province: '上海',
         city: '普陀区',
@@ -75,15 +120,51 @@ export default {
     }
   },
   methods: {
-    handleClick (row) {
-      console.log(row)
+    handleModify (row) {
+      this.dialogFormVisible = true
+    },
+    handleSizeChange () {
+      console.log('handleSizeChange')
+    },
+    handleCurrentChange () {
+      console.log('handleCurrentChange')
+    },
+    showErrorMsg (msg) {
+      console.log(msg)
     },
     searchAccount () {
-      console.log('submit!')
+      if (!this.form.account) {
+        return false
+      }
+      console.log(this.form.account)
     },
     createAccount () {
       console.log('createAccount')
+    },
+    deleteAccount (account) {
+      console.log(account)
+    },
+    handleDelete (done, account) {
+      this.$confirm('确认删除？')
+        .then(_ => {
+          done(account)
+        })
+        .catch(_ => {})
+    },
+    handleCheckedCitiesChange () {
+      console.log(this.createForm)
     }
+  },
+  created () {
+    setTimeout(() => {
+      console.log('111')
+      this.paginationConfig.maxentries = 20
+    }, 3000)
   }
 }
 </script>
+<style lang="less" scoped>
+.block {
+  margin-top: 20px;
+}
+</style>

@@ -1,27 +1,27 @@
 # browser-demo
 
-> 一个基于 [vue](https://github.com/vuejs/vue) 和 [element](https://github.com/ElemeFE/element)的管理后台Demo，内置菜单路由、权限验证等功能
+> 一个基于[vue](https://github.com/vuejs/vue) 和 [element](https://github.com/ElemeFE/element)的管理后台Demo，内置菜单路由、权限验证等功能
 
 ## 前期准备
 
 ```bash
 
-## 安装 [elementUI](http://element-cn.eleme.io/#/zh-CN)
+## 安装[elementUI](http://element-cn.eleme.io/#/zh-CN)
 npm install element-ui -S
 
-## 安装 [normalize.css](http://necolas.github.io/normalize.css/)
+## 安装[normalize.css](http://necolas.github.io/normalize.css/)
 npm install normalize.css -S
 
-## 安装 [svg-sprite-loader](https://www.npmjs.com/package/svg-sprite-loader)
+## 安装[svg-sprite-loader](https://www.npmjs.com/package/svg-sprite-loader)
 npm install svg-sprite-loader -S
 
-## 安装 [less](http://lesscss.cn/)
+## 安装[less](http://lesscss.cn/)
 npm install less less-loader --save-dev
 
-## 安装 [vuex](https://vuex.vuejs.org/zh-cn/)
+## 安装[vuex](https://vuex.vuejs.org/zh-cn/)
 npm install vuex --save
 
-## 安装 [axios](https://www.kancloud.cn/yunye/axios/234845)
+## 安装[axios](https://www.kancloud.cn/yunye/axios/234845)
 npm install axios -S
 
 ```
