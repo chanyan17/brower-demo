@@ -2,6 +2,8 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import { Loading } from 'element-ui'
 import Layout from '@/views/Layout/Layout'
+import { getToken } from '@/utils/auth'
+import store from '@/store'
 
 Vue.use(Router)
 
@@ -46,7 +48,7 @@ export const routes = [
         meta: {
           title: '账号管理',
           icon: 'account-manage',
-          requireAuth: true
+          roles: ['admin']
         }
       }
     ]
@@ -62,7 +64,7 @@ export const routes = [
         meta: {
           title: '角色管理',
           icon: 'role-manage',
-          requireAuth: true
+          roles: ['admin']
         }
       },
       {
@@ -72,7 +74,7 @@ export const routes = [
         meta: {
           title: '权限配置',
           icon: 'root-config',
-          requireAuth: true
+          roles: ['admin']
         }
       }
     ],
@@ -92,7 +94,7 @@ export const routes = [
         meta: {
           title: '用户中心',
           icon: 'user-center',
-          requireAuth: true
+          roles: ['teacher']
         }
       }
     ]
@@ -108,6 +110,7 @@ export const routes = [
   },
   {
     path: '/NotFound',
+    name: 'NotFound',
     component: resolve => require(['@/views/ErrorPage/NotFound.vue'], resolve),
     meta: {
       title: '404'
@@ -126,6 +129,52 @@ export const routes = [
   }
 ]
 
-export default new Router({
+// 免登录名单
+const whiteList = ['/Login', '/NotFound', '/AuthorityTips']
+
+const router = new Router({
   routes
 })
+
+function hasPermission (to, roles) {
+  // 免登录名单内
+  if (whiteList.indexOf(to.path) !== -1) return true
+  // 角色列表为空
+  if (!roles.length) return false
+  // 该路由无角色限制
+  if (!to.meta.roles || !to.meta.roles.length) return true
+  return roles.some(role => to.meta.roles.indexOf(role) > -1)
+}
+
+router.beforeEach((to, from, next) => {
+  // 已登录
+  if (getToken()) {
+    store.commit('GET_TOKEN')
+    // 进入登录界面,则进入主页
+    if (to.path === '/Login') {
+      next({ path: '/' })
+    } else {
+      if (store.state.userinfo.username) {
+        // 已获取用户信息
+        hasPermission(to, store.state.userinfo.roles) ? next() : next({path: '/AuthorityTips'})
+      } else {
+        // 请求获取用户信息
+        store.dispatch('getUserInfo').then(() => {
+          hasPermission(to, store.state.userinfo.roles) ? next() : next({path: '/AuthorityTips'})
+        })
+      }
+    }
+  } else {
+    // 未登录
+    if (whiteList.indexOf(to.path) !== -1) {
+      // 在免登录名单内
+      next()
+    } else {
+      // 不在免登录名单内
+      next(`/Login?redirect=${to.path}`)
+    }
+  }
+  next()
+})
+
+export default router

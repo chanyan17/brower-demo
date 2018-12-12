@@ -1,12 +1,17 @@
 <template>
-  <div id="app">
+  <div id="app" v-loading="fullscreenLoading">
     <router-view/>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'App'
+  name: 'App',
+  data () {
+    return {
+      fullscreenLoading: false
+    }
+  }
 }
 </script>
 <style>

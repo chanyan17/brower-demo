@@ -24,6 +24,7 @@
 
 <script>
 import { isValidateMobile, isValidatePwd } from '@/utils/validate'
+
 export default {
   name: 'Login',
   data () {
@@ -45,8 +46,8 @@ export default {
       isShowPwd: false,
       loading: false,
       loginForm: {
-        account: '',
-        pwd: ''
+        account: '13560123456',
+        pwd: '123456'
       },
       loginRules: {
         account: [
@@ -66,7 +67,12 @@ export default {
     handleLogin () {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
-          this.$router.push({ path: this.redirect || '/' })
+          this.$store.dispatch('userLogin', {
+            account: this.loginForm.account,
+            pwd: this.loginForm.pwd
+          }).then((data) => {
+            this.$router.push({ path: this.redirect || '/' })
+          })
         } else {
           return false
         }

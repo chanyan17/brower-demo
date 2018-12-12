@@ -4,18 +4,30 @@
     <el-col :span="12">
       <div class="grid-content">
         <ul class="action-content">
-          <li>Admin</li>
-          <li><svg-icon  :icon-class="'login-out'"></svg-icon> 退出</li>
+          <li>{{userinfo.username}}</li>
+          <li @click="loginOut"><svg-icon  :icon-class="'login-out'"></svg-icon> 退出</li>
         </ul>
       </div>
     </el-col>
   </el-row>
 </template>
 <script>
+import { mapState } from 'vuex'
 export default {
   name: 'TopHead',
   data () {
     return {}
+  },
+  computed: {
+    ...mapState({
+      userinfo: state => state.userinfo
+    })
+  },
+  methods: {
+    loginOut () {
+      this.$store.commit('REMOVE_TOKEN')
+      this.$router.push({path: '/Login'})
+    }
   }
 }
 </script>
