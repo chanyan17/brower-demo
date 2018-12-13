@@ -13,6 +13,7 @@
 </template>
 <script>
 export default {
+  name: 'Pagination',
   data () {
     /* config: {
      *   maxentries: '总数，必选参数，整数',

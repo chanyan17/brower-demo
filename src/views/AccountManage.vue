@@ -70,6 +70,7 @@
 import Pagination from '@/components/Pagination'
 export default {
   components: {
+    // 局部注册
     Pagination
   },
   data () {

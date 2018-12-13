@@ -3,6 +3,6 @@
   "data": {
     "username": "Admin",
     "mobile": "13560123456",
-    "roles": ["admin"]
+    "roles": ["admin", "teacher"]
   }
 }

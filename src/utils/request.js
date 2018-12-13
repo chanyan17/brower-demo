@@ -1,24 +1,7 @@
 import axios from 'axios'
-import { Message, Loading } from 'element-ui'
-import { getToken } from '@/utils/auth'
-
-// 定义loading变量
-let loading
-
-// 使用Element loading-start 方法
-function startLoading () {
-  loading = Loading.service({
-    body: true,
-    lock: true,
-    text: '加载中……',
-    background: 'rgba(0, 0, 0, 0.7)'
-  })
-}
-
-// 使用Element loading-close 方法
-function endLoading () {
-  loading.close()
-}
+import store from '@/store'
+import { Message } from 'element-ui'
+import { getToken } from '@/utils/token'
 
 // 创建axios实例
 const service = axios.create({
@@ -29,14 +12,22 @@ const service = axios.create({
 // request拦截器
 service.interceptors.request.use(
   config => {
-    startLoading()
+    if (config.isShowLoading) {
+      store.commit('SHOW_LOADING', {
+        loadingText: '努力加载数据中...',
+        loadingSpinner: '',
+        loadingBackground: 'rgba(0, 0, 0, 0.8)'
+      })
+    }
+
     if (getToken()) {
       config.headers['X-Token'] = getToken()
     }
+
     return config
   },
   error => {
-    endLoading()
+    store.commit('HIDE_LOADING')
     Promise.reject(error)
   }
 )
@@ -44,7 +35,7 @@ service.interceptors.request.use(
 // response拦截器
 service.interceptors.response.use(
   response => {
-    endLoading()
+    store.commit('HIDE_LOADING')
     const res = response.data
     if (res.ok === 0) {
       return res.data
@@ -58,7 +49,7 @@ service.interceptors.response.use(
     }
   },
   error => {
-    endLoading()
+    store.commit('HIDE_LOADING')
     Message({
       message: error.message,
       type: 'error',

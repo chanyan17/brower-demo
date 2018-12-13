@@ -1,5 +1,8 @@
-import Vue from 'vue'
-import SvgIcon from '@/components/SvgIcon.vue'
+// golbalRegister已全局注册
+// import Vue from 'vue'
+// import BaseSvgIcon from '@/components/BaseSvgIcon.vue'
+// 全局注册
+// Vue.component('svg-icon', BaseSvgIcon)
 
 /*
     require.context("./test", false, /.test.js$/);这行代码就会去 test 文件夹（不包含子目录）
@@ -9,9 +12,6 @@ import SvgIcon from '@/components/SvgIcon.vue'
     useSubdirectories：是否检索子目录
     regExp: 匹配文件的正则表达式
  */
-// 全局注册
-Vue.component('svg-icon', SvgIcon)
-
 const requireAll = requireContext => requireContext.keys().map(requireContext)
 const req = require.context('./svg', false, /\.svg$/)
 requireAll(req)

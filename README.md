@@ -4,30 +4,43 @@
 
 ## 前期准备
 
+#### 安装[elementUI](http://element-cn.eleme.io/#/zh-CN)
 ```bash
-
-## 安装[elementUI](http://element-cn.eleme.io/#/zh-CN)
 npm install element-ui -S
+```
 
-## 安装[normalize.css](http://necolas.github.io/normalize.css/)
+#### 安装[normalize.css](http://necolas.github.io/normalize.css/)
+```bash
 npm install normalize.css -S
+```
 
-## 安装[svg-sprite-loader](https://www.npmjs.com/package/svg-sprite-loader)
+#### 安装[svg-sprite-loader](https://www.npmjs.com/package/svg-sprite-loader)
+```bash
 npm install svg-sprite-loader -S
+```
 
-## 安装[less](http://lesscss.cn/)
+#### 安装[less](http://lesscss.cn/)
+```bash
 npm install less less-loader --save-dev
+```
 
-## 安装[vuex](https://vuex.vuejs.org/zh-cn/)
+#### 安装[vuex](https://vuex.vuejs.org/zh-cn/)
+```bash
 npm install vuex --save
+```
 
-## 安装[axios](https://www.kancloud.cn/yunye/axios/234845)
+#### 安装[axios](https://www.kancloud.cn/yunye/axios/234845)
+```bash
 npm install axios -S
+```
 
+#### 安装工具库[lodash](https://www.lodashjs.com/)
+```bash
+npm i --save lodash
 ```
 
 ## 路由结构
-```
+
 - 登录
 - 账号管理
     - 查找账号
@@ -42,10 +55,10 @@ npm install axios -S
 - 个人中心
 
 ## 功能
-  - [ ] 表单校验(全局/局部校验)
-  - [ ] 路由跳转逻辑
-  - [ ] 路由权限逻辑
-  - [ ] 全局Loading开关
-  - [ ] 请求拦截器
-  - [ ] 功能组件(分页器)
+  * 表单校验
+  * 路由跳转逻辑
+  * 路由权限逻辑
+  * 全局Loading开关
+  * 请求拦截器
+  * 注册组件模块/过滤器/指令
 

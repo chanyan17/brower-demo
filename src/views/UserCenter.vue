@@ -45,4 +45,8 @@ export default {
       color: #606266;
     }
   }
+  .img {
+    width: 500px;
+    height: 500px;
+  }
 </style>

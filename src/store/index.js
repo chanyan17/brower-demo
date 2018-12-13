@@ -1,14 +1,18 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { login, getUserInfo } from '@/api/user'
-import { getToken, setToken, removeToken } from '@/utils/auth'
+import { getToken, setToken, removeToken } from '@/utils/token'
 
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
     userinfo: {},
-    token: ''
+    token: '',
+    isLoading: false,
+    loadingText: 'Loading...',
+    loadingSpinner: '',
+    loadingBackground: 'rgba(0, 0, 0, 0.8)'
   },
   mutations: {
     SET_USERINFO (state, userinfo) {
@@ -25,6 +29,28 @@ const store = new Vuex.Store({
       state.token = ''
       state.userinfo = {}
       removeToken()
+    },
+    SHOW_LOADING (state, options) {
+      if (!options) options = {}
+      const defaultOptions = {
+        loadingText: 'Loading...',
+        loadingSpinner: '',
+        loadingBackground: 'rgba(0, 0, 0, 0.8)'
+      }
+      for (const k in defaultOptions) {
+        if (defaultOptions.hasOwnProperty(k)) {
+          options[k] = options[k] || defaultOptions[k]
+        }
+      }
+      const {loadingText, loadingSpinner, loadingBackground} = options
+      state.loadingText = loadingText
+      state.loadingSpinner = loadingSpinner
+      state.loadingBackground = loadingBackground
+      console.log(state)
+      state.isLoading = true
+    },
+    HIDE_LOADING (state) {
+      state.isLoading = false
     }
   },
   getters: {},

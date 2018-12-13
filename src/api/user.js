@@ -15,6 +15,7 @@ export function getUserInfo () {
   return request({
     url: '/static/json/userInfo.json',
     method: 'get',
-    params: {}
+    params: {},
+    isShowLoading: false
   })
 }
