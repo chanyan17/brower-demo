@@ -1,28 +1,14 @@
 <template>
-  <div
-    id="app"
-    v-loading.fullscreen.lock="isLoading"
-    :element-loading-text="loadingText"
-    :element-loading-spinner="loadingSpinner"
-    :element-loading-background="loadingBackground">
+  <div id="app">
     <router-view/>
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
 export default {
   name: 'App',
   data () {
     return {}
-  },
-  computed: {
-    ...mapState([
-      'isLoading',
-      'loadingText',
-      'loadingSpinner',
-      'loadingBackground'
-    ])
   }
 }
 </script>

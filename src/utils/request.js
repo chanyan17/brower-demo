@@ -12,7 +12,7 @@ const service = axios.create({
 // request拦截器
 service.interceptors.request.use(
   config => {
-    if (config.isShowLoading) {
+    if (!config.isHideLoading) {
       store.commit('SHOW_LOADING', {
         loadingText: '努力加载数据中...',
         loadingSpinner: '',

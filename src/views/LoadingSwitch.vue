@@ -16,9 +16,9 @@ export default {
   methods: {
     openLoading () {
       this.$store.commit('SHOW_LOADING', {
-        loadingText: '加载中...',
-        loadingSpinner: '',
-        loadingBackground: 'rgba(0, 0, 0, 0.7)'
+        text: '加载中',
+        spinner: '',
+        background: 'rgba(0, 0, 0, 0.3)'
       })
       let clock = window.setInterval(() => {
         this.loadingText = `${this.loadingTime}s后关闭Loading`
@@ -26,7 +26,6 @@ export default {
 
         if (this.loadingTime < 0) {
           window.clearInterval(clock)
-          console.log(this.$store)
           this.$store.commit('HIDE_LOADING')
 
           this.loadingText = '打开Loading'

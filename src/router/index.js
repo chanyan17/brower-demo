@@ -36,12 +36,12 @@ export const routes = [
     hidden: true
   },
   {
-    path: '/',
+    path: '/AccountManage',
+    redirect: '/AccountManage/index',
     component: Layout,
     children: [
       {
-        path: '/AccountManage',
-        name: 'AccountManage',
+        path: '/AccountManage/index',
         component: resolve => require(['@/views/AccountManage.vue'], resolve),
         meta: {
           title: '账号管理',
@@ -52,7 +52,8 @@ export const routes = [
     ]
   },
   {
-    path: '/',
+    path: '/RootRoleManage',
+    redirect: '/RoleManage',
     component: Layout,
     children: [
       {
@@ -82,12 +83,12 @@ export const routes = [
     }
   },
   {
-    path: '/',
+    path: '/UserCenter',
+    redirect: '/UserCenter/index',
     component: Layout,
     children: [
       {
-        path: '/UserCenter',
-        name: 'UserCenter',
+        path: '/UserCenter/index',
         component: resolve => require(['@/views/UserCenter.vue'], resolve),
         meta: {
           title: '用户中心',
@@ -98,12 +99,12 @@ export const routes = [
     ]
   },
   {
-    path: '/',
+    path: '/DirectiveFilter',
+    redirect: '/DirectiveFilter/index',
     component: Layout,
     children: [
       {
-        path: '/DirectiveFilter',
-        name: 'DirectiveFilter',
+        path: '/DirectiveFilter/index',
         component: resolve => require(['@/views/DirectiveFilter.vue'], resolve),
         meta: {
           title: '指令与过滤器',
@@ -113,16 +114,33 @@ export const routes = [
     ]
   },
   {
-    path: '/',
+    path: '/LoadingSwitch',
+    redirect: '/LoadingSwitch/index',
     component: Layout,
     children: [
       {
-        path: '/LoadingSwitch',
-        name: 'LoadingSwitch',
+        path: '/LoadingSwitch/index',
         component: resolve => require(['@/views/LoadingSwitch.vue'], resolve),
         meta: {
           title: 'Loading开关',
           icon: ''
+        }
+      }
+    ]
+  },
+  {
+    path: '/NonePermission',
+    redirect: '/NonePermission/index',
+    component: Layout,
+    children: [
+      {
+        path: '/NonePermission/index',
+        name: 'NonePermission',
+        component: resolve => require(['@/views/NonePermission.vue'], resolve),
+        meta: {
+          title: '无权限示例',
+          icon: '',
+          roles: ['nobody']
         }
       }
     ]

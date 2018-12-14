@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import { Loading } from 'element-ui'
 import { login, getUserInfo } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/token'
 
@@ -9,10 +10,7 @@ const store = new Vuex.Store({
   state: {
     userinfo: {},
     token: '',
-    isLoading: false,
-    loadingText: 'Loading...',
-    loadingSpinner: '',
-    loadingBackground: 'rgba(0, 0, 0, 0.8)'
+    loadingInstance: ''
   },
   mutations: {
     SET_USERINFO (state, userinfo) {
@@ -32,32 +30,34 @@ const store = new Vuex.Store({
     },
     SHOW_LOADING (state, options) {
       if (!options) options = {}
+
       const defaultOptions = {
-        loadingText: 'Loading...',
-        loadingSpinner: '',
-        loadingBackground: 'rgba(0, 0, 0, 0.8)'
+        lock: true,
+        text: 'Loading',
+        spinner: '',
+        background: 'rgba(0, 0, 0, 0.7)'
       }
+
       for (const k in defaultOptions) {
         if (defaultOptions.hasOwnProperty(k)) {
           options[k] = options[k] || defaultOptions[k]
         }
       }
-      const {loadingText, loadingSpinner, loadingBackground} = options
-      state.loadingText = loadingText
-      state.loadingSpinner = loadingSpinner
-      state.loadingBackground = loadingBackground
-      console.log(state)
-      state.isLoading = true
+
+      // 全屏 Loading 不会创建多个实例
+      options.fullscreen = true
+
+      state.loadingInstance = Loading.service(options)
     },
     HIDE_LOADING (state) {
-      state.isLoading = false
+      state.loadingInstance && state.loadingInstance.close()
     }
   },
   getters: {},
   actions: {
     userLogin ({commit}, params) {
       return new Promise((resolve, reject) => {
-        login(params.account, params.pwd).then((response) => {
+        login(params).then((response) => {
           commit('SET_TOKEN', response.token)
           resolve(response)
         }).catch(error => {
